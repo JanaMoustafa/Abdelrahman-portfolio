@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Abdelrahman Elsofany, AI engineer and founder</title>
+  <meta name="description" content="Abdelrahman H. Elsofany is an AI engineer and founder in Cairo: co-founder of AOM Tech, founder of InTheLine. He builds B2B and B2C AI products like Majlis and Saving Goose, and takes them to market.">
+  <meta name="author" content="Abdelrahman Elsofany">
+  <meta name="theme-color" content="#0D1B2A">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Abdelrahman Elsofany, AI engineer and founder">
+  <meta property="og:description" content="Co-founder of AOM Tech, founder of InTheLine. AI products for businesses and everyday people, built and taken to market from Cairo.">
+  <meta property="og:image" content="/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Noto+Kufi+Arabic:wght@500&display=swap">
+  <link rel="preload" href="/assets/portrait-points.json" as="fetch" crossorigin>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" data-nav>
+    <a class="nav__mark" href="#top" aria-label="Abdelrahman Elsofany, back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9.5" y="2" width="5" height="5" rx="1" opacity=".45"/><rect x="17" y="2" width="5" height="5" rx="1"/><rect x="2" y="9.5" width="5" height="5" rx="1" opacity=".45"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><rect x="17" y="9.5" width="5" height="5" rx="1" opacity=".45"/><rect x="2" y="17" width="5" height="5" rx="1"/><rect x="9.5" y="17" width="5" height="5" rx="1" opacity=".45"/><rect x="17" y="17" width="5" height="5" rx="1"/></g></svg>
+      <span>Abdelrahman Elsofany</span>
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#ventures">Ventures</a>
+      <a href="#products">Products</a>
+      <a href="#diadose">DiaDose</a>
+      <a href="#research">Research</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav__cv" href="/assets/Abdelrahman-Elsofany-CV.pdf" download>Download CV</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="sr-only">Open menu</span><i></i><i></i>
+    </button>
+  </header>
+
+  <div class="menu" id="menu" data-menu hidden>
+    <nav aria-label="Sections">
+      <a href="#ventures">Ventures</a>
+      <a href="#products">Products</a>
+      <a href="#diadose">DiaDose</a>
+      <a href="#research">Research</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="/assets/Abdelrahman-Elsofany-CV.pdf" download>Download CV</a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <!-- ============ HERO: reverse diffusion portrait ============ -->
+    <section class="hero" id="top" data-hero>
+      <canvas class="hero__canvas" data-diffusion aria-hidden="true"></canvas>
+      <div class="hero__inner">
+        <h1 class="hero__name">
+          <span class="hero__line">Abdelrahman</span>
+          <span class="hero__line">Elsofany</span>
+          <span class="hero__ar" lang="ar" dir="rtl">عبدالرحمن الصوفاني</span>
+        </h1>
+        <p class="hero__lede">AI engineer and founder in Cairo. Co-founder of AOM Tech, founder of InTheLine. I find where AI earns its place in a business, then build it, price it and take it to market.</p>
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="mailto:abdelrahmanhossam202@gmail.com">Email me</a>
+          <a class="btn btn--ghost" href="#ventures">See the ventures</a>
+        </div>
+      </div>
+      <figure class="readout" aria-hidden="true">
+        <figcaption>Reverse diffusion, rendering this portrait from noise</figcaption>
+        <dl>
+          <div><dt>step</dt><dd data-step>1000</dd></div>
+          <div><dt>loss</dt><dd data-loss>1.00000</dd></div>
+        </dl>
+        <svg class="readout__spark" viewBox="0 0 120 28" preserveAspectRatio="none"><path data-spark d=""/></svg>
+        <p class="readout__hint">Move across the portrait to add noise. It learns its way back.</p>
+      </figure>
+    </section>
+
+    <!-- ============ STATEMENT: attention map ============ -->
+    <section class="statement" aria-labelledby="statement-title">
+      <h2 id="statement-title" class="sr-only">What I do</h2>
+      <div class="statement__wrap" data-attention>
+        <svg class="statement__arcs" aria-hidden="true"></svg>
+        <p class="statement__text">
+          I start with the <b data-tok="problem">problem</b>, not the <b data-tok="model">model</b>: a founder's <b data-tok="cash">cash</b> flow, a café's <b data-tok="queue">queue</b>, a homeowner's <b data-tok="repair">repair</b>, a patient's next <b data-tok="meal">meal</b>. Then I build the <b data-tok="AI">AI</b> that fixes it, <b data-tok="price">price</b> it, and take it to the <b data-tok="market">market</b> that needs it.
+        </p>
+      </div>
+      <p class="statement__note" data-attention-note>Hover a highlighted word to see what it attends to.</p>
+    </section>
+
+    <!-- ============ VENTURES ============ -->
+    <section class="ventures" id="ventures" aria-labelledby="vn-title">
+      <header class="sec-head">
+        <h2 id="vn-title" class="sec-title">Ventures</h2>
+        <p class="sec-sub">I co-founded one company and founded another. In both I work the business side and the build: finding the customer and the price, then shipping the AI that earns it.</p>
+      </header>
+
+      <div class="vgrid">
+        <article class="venture">
+          <p class="venture__role">Co-founder</p>
+          <h3 class="venture__name">AOM Tech</h3>
+          <p class="venture__lede">An AI solutions startup that builds practical AI products, apps and websites for businesses and everyday users.</p>
+          <p>We take a model from notebook to production, then market it and run it. A project only moves to the next stage once the last one has proven itself.</p>
+          <ol class="stages" aria-label="How AOM Tech takes a project to market">
+            <li>Understand</li><li>Prototype</li><li>Build</li><li>Launch</li><li>Market</li><li>Operate</li>
+          </ol>
+          <ul class="tags"><li>Computer vision</li><li>Forecasting</li><li>LLM assistants and RAG</li><li>Full-stack AI products</li><li>Research and evaluation</li></ul>
+          <a class="link" href="https://aom-tech.vercel.app" target="_blank" rel="noopener">Visit AOM Tech</a>
+        </article>
+        <article class="venture">
+          <p class="venture__role">Founder</p>
+          <h3 class="venture__name">InTheLine</h3>
+          <p class="venture__lede">A B2B subscription for cafés that replaces the pager with the customer's own phone, and turns the wait into return visits.</p>
+          <p>It sells monthly per branch, with nothing to install and no hardware to buy, and a café goes live in a day. I run it end to end: the product, the demo, the quote, onboarding, and training the cashiers.</p>
+          <dl class="vfacts">
+            <div><dt>Customer</dt><dd>Café owners and multi-branch chains</dd></div>
+            <div><dt>Model</dt><dd>Monthly subscription per branch</dd></div>
+            <div><dt>Stage</dt><dd>Demos and pilots with Cairo cafés</dd></div>
+          </dl>
+        </article>
+      </div>
+
+      <figure class="market" data-market>
+        <figcaption class="market__cap">
+          <h3>Every product, by market and stage</h3>
+          <p>Select a product to see who it's for and how it earns.</p>
+        </figcaption>
+        <div class="market__plot">
+          <div class="market__row" style="--r:0"><span>Live</span></div>
+          <div class="market__row" style="--r:1"><span>Beta or pilot</span></div>
+          <div class="market__row" style="--r:2"><span>Building</span></div>
+          <div class="market__row" style="--r:3"><span>Research</span></div>
+          <div class="market__field" data-field><i class="market__probe" aria-hidden="true"></i></div>
+        </div>
+        <div class="market__axis" aria-hidden="true"><span>Sells to businesses</span><span>Marketplace</span><span>Sells to people</span></div>
+        <div class="market__foot">
+          <div class="market__detail" data-detail aria-live="polite"></div>
+          <ul class="market__legend"><li><i class="dot dot--aom"></i>AOM Tech</li><li><i class="dot dot--itl"></i>InTheLine</li></ul>
+        </div>
+      </figure>
+    </section>
+
+    <!-- ============ PRODUCTS ============ -->
+    <section class="products" id="products" aria-labelledby="pr-title">
+      <header class="sec-head">
+        <h2 id="pr-title" class="sec-title">Products</h2>
+        <p class="sec-sub">Each one starts from a business question: who has the problem, who pays to solve it, and how the product reaches them.</p>
+      </header>
+
+      <article class="majlis" aria-labelledby="majlis-title">
+        <div class="majlis__copy">
+          <p class="status">Beta</p>
+          <h3 id="majlis-title" class="majlis__title">Majlis <span lang="ar" dir="rtl">مجلس</span></h3>
+          <p class="majlis__lede">A financial council for Egyptian founders and SMEs. Up to eight AI advisors debate a money decision before you make it. They work from your own documents, Egyptian law and calculations done by tested code.</p>
+          <p>Each advisor answers alone first, so nobody copies the loudest voice. Then they challenge each other, the Auditor deletes any claim without a source, and the Chair gives one verdict and names the dissent. Answers come in English or Egyptian Arabic, and the Teacher explains them at your level.</p>
+          <p class="model"><span>Business model</span>B2B for founders and SMEs. Monthly plans in Egyptian pounds, from a free tier to the full eight-advisor council, with a locked price for founding members.</p>
+          <p class="role">Built at AOM Tech: product, pricing and engineering</p>
+          <div class="majlis__actions">
+            <a class="btn btn--solid" href="https://majlis-eg.vercel.app" target="_blank" rel="noopener">Open Majlis</a>
+            <button class="btn btn--ghost" type="button" data-council-replay>Replay the debate</button>
+          </div>
+        </div>
+        <div class="council" data-council>
+          <svg viewBox="0 0 520 400" role="img" aria-label="Animation of Majlis advisors debating, the Auditor removing an unsourced claim, and the Chair giving a verdict">
+            <g class="council__links"></g>
+            <g class="council__seats"></g>
+          </svg>
+          <div class="council__claim" data-claim>
+            <span>“Revenue will double next quarter.”</span>
+            <em>No source, removed by the Auditor</em>
+          </div>
+          <div class="verdict" data-verdict>
+            <p class="verdict__who">The Chair's verdict</p>
+            <p class="verdict__text">Sign the contract, but ask for 30% upfront first.</p>
+            <p class="verdict__vote">5 of 6 advisors agree. Dissent: Risk officer.</p>
+          </div>
+        </div>
+      </article>
+
+      <ul class="plist">
+        <li class="prod" data-spec="goose">
+          <div class="prod__head">
+            <h3>Saving Goose</h3>
+            <p class="status status--live">Live</p>
+          </div>
+          <div class="prod__body">
+            <p>A free budgeting app with a goose in glasses that guards your money and roasts you when you overspend. Ten golden eggs stand for the month's budget and crack as you spend. It installs from the browser, works offline, runs fully in English or Egyptian Arabic with a right-to-left layout, and keeps every number on your phone.</p>
+            <p class="model"><span>Business model</span>B2C. Free, with no ads, accounts or servers. AOM Tech's first public app.</p>
+            <p class="role">Designer and developer</p>
+            <ul class="tags"><li>PWA</li><li>Vanilla JS</li><li>Service worker</li><li>RTL</li><li>CSP hardening</li></ul>
+            <a class="link" href="https://saving-goose.vercel.app" target="_blank" rel="noopener">Open Saving Goose</a>
+          </div>
+          <div class="spec spec--goose" aria-hidden="true">
+            <div class="eggs"></div>
+            <p class="spec__cap"><span data-goose-spent>0</span> of 10,000 EGP spent</p>
+          </div>
+        </li>
+
+        <li class="prod" data-spec="line">
+          <div class="prod__head">
+            <h3>InTheLine</h3>
+            <p class="status">Pilots with cafés</p>
+          </div>
+          <div class="prod__body">
+            <p>A replacement for the café pager. The cashier taps in an order, the customer scans a QR, and their own phone rings when the drink is ready. While they wait there's a bean-catching game, loyalty beans and coupons. The owner gets live numbers: orders, average wait, busiest hours.</p>
+            <p class="model"><span>Business model</span>B2B. A monthly subscription per branch replaces pagers bought up front.</p>
+            <p class="role">Founder</p>
+            <ul class="tags"><li>Next.js</li><li>Postgres</li><li>Web push</li><li>Arabic and English</li></ul>
+          </div>
+          <div class="spec spec--line" aria-hidden="true">
+            <div class="ticket">
+              <span class="ticket__no">47</span>
+              <ol class="ticket__states"><li>Preparing</li><li>Ready</li><li>Seen</li></ol>
+            </div>
+          </div>
+        </li>
+
+        <li class="prod" data-spec="osta">
+          <div class="prod__head">
+            <h3>Osta <span lang="ar" dir="rtl">أوسطى</span></h3>
+            <p class="status">In development</p>
+          </div>
+          <div class="prod__body">
+            <p>A home-services marketplace for Egypt. A homeowner posts a job with photos, nearby plumbers, electricians and carpenters send competing quotes, and the homeowner picks one. Identity checks, an arrival passcode and an Arabic-first app for craftsmen are built to make strangers trustworthy.</p>
+            <p class="model"><span>Business model</span>A two-sided marketplace with open bidding instead of fixed prices.</p>
+            <p class="role">Founding team, AOM Tech</p>
+            <ul class="tags"><li>Next.js 16</li><li>React 19</li><li>Supabase</li><li>Row-level security</li></ul>
+          </div>
+          <div class="spec spec--osta" aria-hidden="true">
+            <div class="quotes">
+              <p class="quote"><span>Electrician, 4.8</span><b>450 EGP</b></p>
+              <p class="quote"><span>Electrician, 4.9</span><b>380 EGP</b></p>
+              <p class="quote"><span>Electrician, 4.6</span><b>520 EGP</b></p>
+            </div>
+          </div>
+        </li>
+
+        <li class="prod" data-spec="uai">
+          <div class="prod__head">
+            <h3>U.ai</h3>
+            <p class="status">Early build</p>
+          </div>
+          <div class="prod__body">
+            <p>An AI companion for people carrying something big mostly on their own. It remembers you without setup, notices when something significant happens, and checks in the next day instead of waiting to be asked. You can see, edit and delete everything it remembers.</p>
+            <p class="model"><span>Business model</span>B2C consumer app. Pricing is still being tested with early users.</p>
+            <p class="role">Founder</p>
+            <ul class="tags"><li>Long-term memory</li><li>Proactive check-ins</li><li>Per-user encryption</li></ul>
+          </div>
+          <div class="spec spec--uai" aria-hidden="true">
+            <svg viewBox="0 0 220 150" class="mem"></svg>
+            <p class="bubble">You said Thursday was the deadline. How did it go?</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="earlier">
+        <h3 class="earlier__title">More builds</h3>
+        <dl class="earlier__list">
+          <div>
+            <dt>Bone Guard</dt>
+            <dd>A deep-learning system trained on 3,746 bone X-rays. It detects osteosarcoma with an AUC of 0.99, classifies ten tumour types at 92.8% accuracy, combines the image with clinical data, outlines the tumour and writes a PDF report for a specialist to review. <span class="earlier__meta">AOM Tech research prototype. ConvNeXt-Tiny, EfficientNet, U-Net, Grad-CAM.</span></dd>
+          </div>
+          <div>
+            <dt>Healix</dt>
+            <dd>A full-stack healthcare platform with role-based access for patients and clinicians, REST APIs for appointments and medical records, and AI models for disease prediction, symptom analysis and medical image analysis served from production endpoints. <span class="earlier__meta">Personal project. React, FastAPI, Docker, JWT.</span></dd>
+          </div>
+          <div>
+            <dt>SecureVault</dt>
+            <dd>A zero-trust encrypted file store. I owned DevOps: the whole stack runs in Docker Compose behind an Nginx reverse proxy that enforces Content-Security-Policy, XSS and clickjacking protection. <span class="earlier__meta">Team project, DevOps lead. React, Vite, Node, Express, MongoDB, Nginx.</span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ DIADOSE ============ -->
+    <section class="dd" id="diadose" aria-labelledby="dd-title">
+      <header class="sec-head">
+        <h2 id="dd-title" class="sec-title">DiaDose</h2>
+        <p class="sec-sub">My graduation project: an AI assistant for people with diabetes. Photograph a meal and it works out what's on the plate, the carbs, a dose, and the next 24 hours of glucose. The paper behind it is accepted in <em>Informatica</em> (Web of Science, IF 3.429).</p>
+      </header>
+
+      <div class="dd__grid">
+        <div class="dd__stage" data-dd-stage data-state="1" aria-live="polite">
+          <!-- state 1: recognise -->
+          <div class="stage stage--recognise" data-panel="1">
+            <div class="classes" data-classes aria-hidden="true"></div>
+            <ol class="top5" data-top5 aria-label="Example output, top five classes">
+              <li><span>falafel</span><i style="--p:.86"></i><b>0.86</b></li>
+              <li><span>hummus</span><i style="--p:.06"></i><b>0.06</b></li>
+              <li><span>samosa</span><i style="--p:.03"></i><b>0.03</b></li>
+              <li><span>takoyaki</span><i style="--p:.02"></i><b>0.02</b></li>
+              <li><span>dumplings</span><i style="--p:.01"></i><b>0.01</b></li>
+            </ol>
+            <p class="stage__foot">Example output across all 101 Food-101 classes</p>
+          </div>
+          <!-- state 2: estimate -->
+          <div class="stage stage--estimate" data-panel="2">
+            <ul class="nutr">
+              <li><span>Carbs</span><b data-count="48">48</b><small>g</small><em>± 5.18 g mean error</em></li>
+              <li><span>Energy</span><b data-count="410">410</b><small>kcal</small><em>± 60 kcal</em></li>
+              <li><span>Fat</span><b data-count="18">18</b><small>g</small><em>± 4.22 g</em></li>
+              <li><span>Protein</span><b data-count="14">14</b><small>g</small><em>± 5.30 g</em></li>
+            </ul>
+            <p class="stage__foot">Example plate. Error bars are the model's mean absolute error on Nutrition5K.</p>
+          </div>
+          <!-- state 3: dose (interactive) -->
+          <div class="stage stage--dose" data-panel="3">
+            <form class="dose" data-dose onsubmit="return false">
+              <label>
+                <span>Carbs in the meal</span>
+                <output data-out="carbs">48 g</output>
+                <input type="range" name="carbs" min="0" max="150" step="1" value="48">
+              </label>
+              <label>
+                <span>Blood glucose now</span>
+                <output data-out="bg">180 mg/dL</output>
+                <input type="range" name="bg" min="80" max="350" step="1" value="180">
+              </label>
+              <div class="dose__math" aria-live="polite">
+                <p><span>Meal bolus</span><code data-math="meal">48 ÷ 15 = 3.2</code></p>
+                <p><span>Correction</span><code data-math="corr">(180 − 110 − 30) ÷ 40 = 1.0</code></p>
+                <p class="dose__total"><span>Suggested dose</span><strong data-math="total">4.2</strong><small>units</small></p>
+              </div>
+            </form>
+            <p class="stage__foot">The base formula from the published engine (ICR 15, ISF 40, target 110 mg/dL, capped at 20 units). A demo for learning, not medical advice.</p>
+          </div>
+          <!-- state 4: forecast -->
+          <div class="stage stage--forecast" data-panel="4">
+            <svg class="fc" viewBox="0 0 400 240" data-forecast role="img" aria-label="Illustrative 24-hour glucose forecast from three models blended into one">
+              <g class="fc__grid"></g>
+              <rect class="fc__target" x="34" y="0" width="356" height="0"/>
+              <path class="fc__band" d=""/>
+              <path class="fc__m fc__m--a" d=""/>
+              <path class="fc__m fc__m--b" d=""/>
+              <path class="fc__m fc__m--c" d=""/>
+              <path class="fc__ens" d=""/>
+              <g class="fc__axis"></g>
+            </svg>
+            <ul class="fc__legend">
+              <li><i class="k k--a"></i>BiLSTM</li>
+              <li><i class="k k--b"></i>CNN-LSTM with attention</li>
+              <li><i class="k k--c"></i>Transformer</li>
+              <li><i class="k k--e"></i>Weighted ensemble</li>
+            </ul>
+            <p class="stage__foot">Illustrative curve. The shaded band is the 70–180 mg/dL target range.</p>
+          </div>
+        </div>
+
+        <ol class="dd__steps">
+          <li class="dd__step" data-dd-step="1">
+            <h3>Recognise the food</h3>
+            <p>A two-stage transfer-learning run on an EfficientNetV2-S backbone reads a photo, or a typed dish name, and ranks all 101 Food-101 classes.</p>
+            <p class="metric"><b>86.63%</b> top-1 and <b>97.43%</b> top-5 accuracy</p>
+          </li>
+          <li class="dd__step" data-dd-step="2">
+            <h3>Estimate the nutrients</h3>
+            <p>A regression head trained on Google's Nutrition5K predicts carbohydrates, energy, fat and protein from the same image.</p>
+            <p class="metric">Mean error of <b>5.18 g</b> carbs and <b>60 kcal</b></p>
+          </li>
+          <li class="dd__step" data-dd-step="3">
+            <h3>Recommend a dose</h3>
+            <p>A seven-layer dosing engine follows ADA 2024, ISPAD 2019–2024, WHO and NICE guidance: insulin-to-carb ratio, sensitivity factor, HbA1c calibration, dawn-phenomenon correction, glycaemic index and BMI tiers for Type 2. Drag the sliders to run the base formula yourself.</p>
+          </li>
+          <li class="dd__step" data-dd-step="4">
+            <h3>Forecast the next 24 hours</h3>
+            <p>A BiLSTM, a CNN-LSTM with attention and a Transformer forecast glucose together as a weighted ensemble. SHAP values explain every forecast, so a patient can see why the curve bends.</p>
+            <p class="metric">An R² of <b>0.9859</b></p>
+          </li>
+          <li class="dd__step dd__step--stack">
+            <h3>Ship it</h3>
+            <p>A FastAPI and SQLite app with 18+ REST endpoints, JWT and bcrypt auth, a live patient dashboard for glucose, water and wellness, 7-day meal plans, risk alerts, and a nutrition chatbot running LLaMA 3.3 70B.</p>
+            <ul class="tags"><li>PyTorch</li><li>EfficientNetV2-S</li><li>BiLSTM</li><li>Transformer</li><li>SHAP</li><li>FastAPI</li><li>SQLite</li><li>LLaMA 3.3 70B</li></ul>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ RESEARCH ============ -->
+    <section class="research" id="research" aria-labelledby="rs-title">
+      <header class="sec-head">
+        <h2 id="rs-title" class="sec-title">Research</h2>
+        <p class="sec-sub">Five peer-reviewed papers from my work as a research assistant at The British University in Egypt. Most are on explainable AI in healthcare: models that predict, and then show why.</p>
+      </header>
+      <div class="papers" data-papers>
+        <svg class="trace" aria-hidden="true"><path class="trace__ghost" d=""/><path class="trace__live" d=""/><circle class="trace__probe" r="4"/></svg>
+        <ol class="papers__list">
+          <li class="paper" data-wave="glucose">
+            <p class="paper__when"><time datetime="2023-11">November 2023</time>, ICCA 2023, IEEE Egypt</p>
+            <h3 class="paper__title">Prediction and Follow-Up of Diabetes Using Machine Learning Through a Mobile App</h3>
+            <p class="paper__by"><strong>Abd Elrahman H. El-Sofany</strong>, Hosam F. El-Sofany, Samir A. El-Seoud</p>
+          </li>
+          <li class="paper" data-wave="ecg">
+            <p class="paper__when"><time datetime="2025-09">September 2025</time>, <em>Informatica</em>, Q1, vol. 36, issue 9</p>
+            <h3 class="paper__title">Enhanced Deep Learning and IoT-Based Approach for Heart Diseases Prediction Using Feature Selection Methods and Explainable AI Technique</h3>
+            <p class="paper__by">Hosam El-Sofany, <strong>Abd Elrahman H. El-Sofany</strong>, Belgacem Bouallegue, Abdelmoty M. Ahmed, Islam A.T.F. Taj-Eddin</p>
+            <a class="link" href="https://doi.org/10.61586/YtTX" target="_blank" rel="noopener">doi.org/10.61586/YtTX</a>
+          </li>
+          <li class="paper" data-wave="eeg">
+            <p class="paper__when"><time datetime="2025-10">October 2025</time>, <em>Informatica</em>, Q1, vol. 36, issue 10</p>
+            <h3 class="paper__title">A Machine Learning-Based Approach for Predicting Alzheimer's Diseases Using Data Classification and Explainable Artificial Intelligence Techniques</h3>
+            <p class="paper__by">Hosam El-Sofany, <strong>Abd Elrahman H. El-Sofany</strong>, Abdelmoty M. Ahmed, Shanawaz Ahmed J., Belgacem Bouallegue</p>
+            <a class="link" href="https://doi.org/10.61586/CyWjG" target="_blank" rel="noopener">doi.org/10.61586/CyWjG</a>
+          </li>
+          <li class="paper" data-wave="learn">
+            <p class="paper__when"><time datetime="2025-10">October 2025</time>, ICL2025 and the 53rd IGIP Conference, Budapest</p>
+            <h3 class="paper__title">Using Machine Learning Classification Algorithms and an Explainable AI Technique to Predict Student Learning Outcomes</h3>
+            <p class="paper__by">Hosam F. El-Sofany, Samir A. El-Seoud, <strong>Abd Elrahman H. El-Sofany</strong></p>
+          </li>
+          <li class="paper" data-wave="steady">
+            <p class="paper__when"><time datetime="2026-07">July 2026</time>, <em>Informatica</em>, Web of Science, accepted</p>
+            <h3 class="paper__title">Artificial Intelligence-Powered Insulin Recommendation System for Effective Diabetes Management</h3>
+            <p class="paper__by"><strong>Abd Elrahman H. El-Sofany</strong>, Belgacem Bouallegue, Hosam El-Sofany</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about" id="about" aria-labelledby="ab-title">
+      <figure class="about__photo" data-conv>
+        <img src="/assets/portrait.jpg" width="966" height="1019" alt="Abdelrahman Elsofany in a black suit, smiling, against a grey studio backdrop" loading="lazy" decoding="async">
+        <canvas aria-hidden="true"></canvas>
+      </figure>
+      <div class="about__copy">
+        <h2 id="ab-title" class="sec-title">About</h2>
+        <p class="about__lede">I'm an AI engineer who thinks like a founder. I co-founded AOM Tech, an AI solutions startup, and founded InTheLine. The question I keep coming back to is where AI actually earns its place in a business, and who will pay for it.</p>
+        <p>I studied artificial intelligence at The British University in Egypt, graduated in June 2026, and co-authored five peer-reviewed papers along the way. That research habit carries into business: market research before features, pricing tested with real customers, and honest labels on what is and isn't built yet.</p>
+
+        <dl class="facts">
+          <div><dt>Ventures</dt><dd>Co-founder, AOM Tech. Founder, InTheLine.</dd></div>
+          <div><dt>Business</dt><dd>Product strategy, business models and pricing, market research, go-to-market, pitching and sales, for B2B and B2C.</dd></div>
+          <div><dt>Education</dt><dd>Artificial intelligence, The British University in Egypt, El Shorouk. Graduated June 2026.</dd></div>
+          <div><dt>Experience</dt><dd>Research assistant, The British University in Egypt. Literature reviews, experiments and five peer-reviewed papers.</dd></div>
+          <div><dt>Training</dt><dd>Flutter development, ICT Training Program, 60 hours, graded Excellent (July 2025). Introduction to machine learning, AITB (August 2023). HP LIFE courses in AI, and in data science and analytics (2025).</dd></div>
+          <div><dt>Engineering</dt><dd>Python, PyTorch, C++, FastAPI, React, Next.js, Supabase, SQLite, MongoDB, Docker, Nginx, Flutter, SHAP.</dd></div>
+          <div><dt>Languages</dt><dd>Arabic (native) and English.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact" id="contact" aria-labelledby="ct-title">
+      <h2 id="ct-title" class="contact__title">Have a business problem AI should solve, or a product to take to market? Write to me.</h2>
+      <a class="contact__mail" href="mailto:abdelrahmanhossam202@gmail.com" data-mail>abdelrahmanhossam202@gmail.com</a>
+      <ul class="contact__list">
+        <li><a href="tel:+201030045550">+20 103 004 5550</a></li>
+        <li><a href="https://www.linkedin.com/in/abdelrahman-hossam-elsofany-b2083534a" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="/assets/Abdelrahman-Elsofany-CV.pdf" download>Download CV (PDF)</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 Abdelrahman Elsofany. Co-founder of AOM Tech, founder of InTheLine.</p>
+    <a href="#top">Back to top</a>
+  </footer>
+
+  <script src="/vendor/gsap.min.js" defer></script>
+  <script src="/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
