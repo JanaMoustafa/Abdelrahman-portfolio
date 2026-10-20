@@ -16,7 +16,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Noto+Kufi+Arabic:wght@500&display=swap">
-  <link rel="preload" href="/assets/portrait-points.json" as="fetch" crossorigin>
   <link rel="stylesheet" href="/css/styles.css">
   <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -55,9 +54,8 @@
   </div>
 
   <main id="main">
-    <!-- ============ HERO: reverse diffusion portrait ============ -->
+    <!-- ============ HERO ============ -->
     <section class="hero" id="top" data-hero>
-      <canvas class="hero__canvas" data-diffusion aria-hidden="true"></canvas>
       <div class="hero__inner">
         <h1 class="hero__name">
           <span class="hero__line">Abdelrahman</span>
@@ -70,14 +68,9 @@
           <a class="btn btn--ghost" href="#ventures">See the ventures</a>
         </div>
       </div>
-      <figure class="readout" aria-hidden="true">
-        <figcaption>Reverse diffusion, rendering this portrait from noise</figcaption>
-        <dl>
-          <div><dt>step</dt><dd data-step>1000</dd></div>
-          <div><dt>loss</dt><dd data-loss>1.00000</dd></div>
-        </dl>
-        <svg class="readout__spark" viewBox="0 0 120 28" preserveAspectRatio="none"><path data-spark d=""/></svg>
-        <p class="readout__hint">Move across the portrait to add noise. It learns its way back.</p>
+      <figure class="hero__photo" data-conv>
+        <img src="/assets/portrait.jpg" width="966" height="1019" alt="Abdelrahman Elsofany in a black suit, smiling, against a grey studio backdrop" fetchpriority="high" decoding="async">
+        <canvas aria-hidden="true"></canvas>
       </figure>
     </section>
 
@@ -90,7 +83,6 @@
           I start with the <b data-tok="problem">problem</b>, not the <b data-tok="model">model</b>: a founder's <b data-tok="cash">cash</b> flow, a café's <b data-tok="queue">queue</b>, a homeowner's <b data-tok="repair">repair</b>, a patient's next <b data-tok="meal">meal</b>. Then I build the <b data-tok="AI">AI</b> that fixes it, <b data-tok="price">price</b> it, and take it to the <b data-tok="market">market</b> that needs it.
         </p>
       </div>
-      <p class="statement__note" data-attention-note>Hover a highlighted word to see what it attends to.</p>
     </section>
 
     <!-- ============ VENTURES ============ -->
@@ -422,12 +414,8 @@
 
     <!-- ============ ABOUT ============ -->
     <section class="about" id="about" aria-labelledby="ab-title">
-      <figure class="about__photo" data-conv>
-        <img src="/assets/portrait.jpg" width="966" height="1019" alt="Abdelrahman Elsofany in a black suit, smiling, against a grey studio backdrop" loading="lazy" decoding="async">
-        <canvas aria-hidden="true"></canvas>
-      </figure>
+      <h2 id="ab-title" class="sec-title">About</h2>
       <div class="about__copy">
-        <h2 id="ab-title" class="sec-title">About</h2>
         <p class="about__lede">I'm an AI engineer who thinks like a founder. I co-founded AOM Tech, an AI solutions startup, and founded InTheLine. The question I keep coming back to is where AI actually earns its place in a business, and who will pay for it.</p>
         <p>I studied artificial intelligence at The British University in Egypt, graduated in June 2026, and co-authored five peer-reviewed papers along the way. That research habit carries into business: market research before features, pricing tested with real customers, and honest labels on what is and isn't built yet.</p>
 

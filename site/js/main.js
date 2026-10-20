@@ -58,204 +58,12 @@
   ['ventures', 'products', 'diadose', 'research', 'about', 'contact'].forEach((id) => { const s = document.getElementById(id); if (s) secIO.observe(s); });
 
   /* ------------------------------------------------------------------
-     Hero: the portrait is sampled by a reverse-diffusion process.
-     x_t = sqrt(abar_t) * x_0 + sqrt(1 - abar_t) * eps   (cosine schedule)
-     Load runs t from 1 to 0; scrolling away pushes t back up; the
-     pointer injects local noise that springs back.
-  ------------------------------------------------------------------ */
-  const canvas = $('[data-diffusion]');
-  const hero = $('[data-hero]');
-  const stepEl = $('[data-step]');
-  const lossEl = $('[data-loss]');
-  const sparkEl = $('[data-spark]');
-
-  fetch('/assets/portrait-points.json').then((r) => r.json()).then(initDiffusion).catch(() => {});
-
-  function initDiffusion(data) {
-    const ctx = canvas.getContext('2d', { alpha: true });
-    const raw = data.p;
-    const gw = Math.round(1 / data.g);
-    const aspect = data.aspect;
-    const BUCKETS = 7;
-
-    let N, px, py, pv, eps, dx, dy, vx, vy, order, cellMul;
-    let W = 0, H = 0, dpr = 1, cell = 2, spread = 300, cx = 0, cy = 0, tx, ty;
-
-    function build(sub) {
-      const keep = [];
-      for (let i = 0; i < raw.length; i += 3) {
-        if (sub > 1) {
-          const gx = Math.round(raw[i] * gw - 0.5), gy = Math.round(raw[i + 1] * gw / aspect - 0.5);
-          if (gx % sub || gy % sub) continue;
-        }
-        keep.push(i);
-      }
-      N = keep.length;
-      px = new Float32Array(N); py = new Float32Array(N); pv = new Float32Array(N);
-      eps = new Float32Array(N * 2);
-      dx = new Float32Array(N); dy = new Float32Array(N); vx = new Float32Array(N); vy = new Float32Array(N);
-      tx = new Float32Array(N); ty = new Float32Array(N);
-      const rand = rng(1907);
-      keep.forEach((i, k) => {
-        px[k] = raw[i]; py[k] = raw[i + 1]; pv[k] = raw[i + 2];
-        const u = Math.max(rand(), 1e-6), v = rand();
-        const m = Math.sqrt(-2 * Math.log(u));
-        eps[k * 2] = m * Math.cos(6.2832 * v);
-        eps[k * 2 + 1] = m * Math.sin(6.2832 * v);
-      });
-      // draw order grouped by brightness bucket, so fillStyle changes only BUCKETS times a frame
-      order = Array.from({ length: BUCKETS }, () => []);
-      for (let k = 0; k < N; k++) order[Math.min(BUCKETS - 1, (pv[k] * BUCKETS) | 0)].push(k);
-      order = order.map((a) => Uint32Array.from(a));
-      cellMul = sub;
-    }
-
-    let currentSub = 0;
-    function layout() {
-      const r = canvas.getBoundingClientRect();
-      W = r.width; H = r.height;
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const mobile = W < 860;
-      let ph, pw, x0, y0;
-      if (mobile) {
-        ph = Math.min(H * 0.5, (W * 0.92) / aspect); pw = ph * aspect;
-        x0 = (W - pw) / 2; y0 = H * 0.55 - ph;
-      } else {
-        ph = H * 0.93; pw = ph * aspect;
-        if (pw > W * 0.6) { pw = W * 0.6; ph = pw / aspect; }
-        x0 = W - pw - W * 0.03; y0 = H - ph;
-      }
-      const base = pw / gw;
-      const sub = base < 3.4 ? 2 : 1;
-      if (sub !== currentSub) { build(sub); currentSub = sub; }
-      cell = base * cellMul;
-      for (let k = 0; k < N; k++) { tx[k] = x0 + px[k] * pw; ty[k] = y0 + py[k] * ph; }
-      cx = x0 + pw / 2; cy = y0 + ph * 0.45;
-      spread = Math.max(W, H) * 0.3;
-    }
-
-    // colours: brightness bucket blends steel -> mist -> bone; noise pulls everything toward steel
-    const STEEL = [65, 90, 119], MIST = [119, 141, 169], BONE = [224, 225, 221];
-    const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
-    const bucketCol = Array.from({ length: BUCKETS }, (_, b) => {
-      const v = (b + 0.5) / BUCKETS;
-      return v < 0.5 ? mix(STEEL, MIST, v / 0.5) : mix(MIST, BONE, (v - 0.5) / 0.5);
-    });
-
-    const abar = (t) => {
-      const s = 0.008, f = (x) => Math.cos(((x + s) / (1 + s)) * Math.PI / 2) ** 2;
-      return f(t) / f(0);
-    };
-
-    // state
-    let tIntro = RM ? 0 : 1, tShown = tIntro, introStart = 0;
-    const INTRO_MS = 3400;
-    const ptr = { x: -1e4, y: -1e4, active: false, moved: false };
-    const spark = [];
-    let frame = 0, running = false, visible = true;
-
-    hero.addEventListener('pointermove', (e) => {
-      if (RM) return;
-      const r = canvas.getBoundingClientRect();
-      ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top; ptr.moved = true;
-    }, { passive: true });
-    hero.addEventListener('pointerleave', () => { ptr.x = ptr.y = -1e4; });
-
-    const kick = rng(42);
-    function inject() {
-      const R = cell * 16, R2 = R * R, S = cell * 2.6;
-      for (let k = 0; k < N; k++) {
-        const ex = tx[k] + dx[k] - ptr.x, ey = ty[k] + dy[k] - ptr.y;
-        const d2 = ex * ex + ey * ey;
-        if (d2 > R2) continue;
-        const f = 1 - Math.sqrt(d2) / R;
-        vx[k] += (kick() - 0.5) * S * f * 2 + ex / R * S * f * 0.6;
-        vy[k] += (kick() - 0.5) * S * f * 2 + ey / R * S * f * 0.6;
-      }
-    }
-
-    function draw(now) {
-      if (!introStart) introStart = now;
-      // reverse process on load
-      if (tIntro > 0) {
-        const p = clamp((now - introStart) / INTRO_MS, 0, 1);
-        tIntro = p < 1 ? Math.pow(1 - p, 2.2) : 0;
-      }
-      // forward process on scroll
-      const hr = hero.getBoundingClientRect();
-      const tScroll = RM ? 0 : clamp(-hr.top / (hr.height * 0.85), 0, 1) * 0.9;
-      const target = Math.max(tIntro, tScroll);
-      tShown = lerp(tShown, target, tIntro > 0 ? 1 : 0.14);
-
-      const ab = abar(tShown), sa = Math.sqrt(ab), sn = Math.sqrt(1 - ab);
-      if (ptr.moved) { inject(); ptr.moved = false; }
-
-      ctx.clearRect(0, 0, W, H);
-      const wob = cell * 0.18, tt = now * 0.0012;
-      let err = 0;
-      const sizeBase = cell * 0.32, sizeRange = cell * 0.62;
-      for (let b = 0; b < BUCKETS; b++) {
-        const col = mix(bucketCol[b], STEEL, Math.min(1, sn * 1.15));
-        const alpha = (0.3 + 0.7 * ((b + 0.5) / BUCKETS)) * (1 - 0.35 * sn);
-        ctx.fillStyle = `rgba(${col[0]},${col[1]},${col[2]},${alpha.toFixed(3)})`;
-        const idx = order[b];
-        for (let j = 0; j < idx.length; j++) {
-          const k = idx[j];
-          // spring the pointer displacement back to zero
-          vx[k] = (vx[k] - dx[k] * 0.055) * 0.86; vy[k] = (vy[k] - dy[k] * 0.055) * 0.86;
-          dx[k] += vx[k]; dy[k] += vy[k];
-          const ox = tx[k] - cx, oy = ty[k] - cy;
-          const x = cx + sa * ox + sn * eps[k * 2] * spread + dx[k] + Math.sin(tt + k) * wob;
-          const y = cy + sa * oy + sn * eps[k * 2 + 1] * spread + dy[k] + Math.cos(tt * 1.3 + k * 0.7) * wob;
-          const ex = x - tx[k], ey = y - ty[k];
-          err += ex * ex + ey * ey;
-          const s = sizeBase + sizeRange * pv[k] * (1 - 0.45 * sn);
-          ctx.fillRect(x - s / 2, y - s / 2, s, s);
-        }
-      }
-
-      const loss = err / N / (2 * spread * spread);
-      if ((frame++ & 3) === 0) {
-        stepEl.textContent = String(Math.round(tShown * 1000));
-        lossEl.textContent = loss.toFixed(5);
-        spark.push(loss); if (spark.length > 90) spark.shift();
-        const max = Math.max(...spark, 1e-4);
-        sparkEl.setAttribute('d', spark.map((v, i) => `${i ? 'L' : 'M'}${(i / 89 * 120).toFixed(1)} ${(26 - Math.sqrt(v / max) * 24).toFixed(1)}`).join(''));
-      }
-    }
-
-    function loop(now) {
-      if (!running) return;
-      draw(now);
-      requestAnimationFrame(loop);
-    }
-    const start = () => { if (!running && visible && !document.hidden) { running = true; requestAnimationFrame(loop); } };
-    const stop = () => { running = false; };
-
-    layout();
-    if (RM) { draw(performance.now()); }
-    else {
-      new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }).observe(hero);
-      document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
-      start();
-    }
-    let rz;
-    addEventListener('resize', () => {
-      clearTimeout(rz);
-      rz = setTimeout(() => { layout(); if (RM) draw(performance.now()); }, 120);
-    });
-  }
-
-  /* ------------------------------------------------------------------
      Statement: one attention head over the sentence
   ------------------------------------------------------------------ */
   (() => {
     const wrap = $('[data-attention]');
     if (!wrap) return;
     const svg = $('.statement__arcs', wrap);
-    const note = $('[data-attention-note]');
     const toks = Object.fromEntries($$('b[data-tok]', wrap).map((b) => [b.dataset.tok, b]));
     const A = {
       problem: { cash: 0.8, queue: 0.78, repair: 0.76, meal: 0.74 },
@@ -275,7 +83,7 @@
       current = q;
       svg.textContent = '';
       Object.values(toks).forEach((b) => { b.classList.remove('is-query', 'is-key'); b.style.removeProperty('--w'); });
-      if (!q) { note.textContent = 'Hover a highlighted word to see what it attends to.'; return; }
+      if (!q) return;
       const box = wrap.getBoundingClientRect();
       const qb = toks[q]; qb.classList.add('is-query');
       const qr = qb.getBoundingClientRect();
@@ -298,7 +106,6 @@
           p.animate([{ strokeDashoffset: len }, { strokeDashoffset: 0 }], { duration: 700, delay: i * 90, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' });
         }
       });
-      note.textContent = `Attention from “${q}”: ` + entries.map(([k, w]) => `${k} ${w.toFixed(2)}`).join(', ');
     }
     const auto = () => {
       clearInterval(timer);
@@ -762,7 +569,7 @@
   })();
 
   /* ------------------------------------------------------------------
-     About: a 3x3 Sobel kernel convolves across the photo and reveals it
+     Hero photo: a 3x3 Sobel kernel convolves across it and reveals it
   ------------------------------------------------------------------ */
   (() => {
     const fig = $('[data-conv]');
@@ -818,8 +625,8 @@
         if (i < path.length) requestAnimationFrame(step);
         else { revealed.fill(1); paint(); done = true; cv.remove(); }
       };
-      requestAnimationFrame(step);
-    }, { threshold: 0.35 });
+      setTimeout(() => requestAnimationFrame(step), 350);
+    }, { threshold: 0.2 });
     addEventListener('resize', () => { if (!done) { size(); paint(); } });
   })();
 })();
