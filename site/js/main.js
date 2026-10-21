@@ -569,6 +569,46 @@
   })();
 
   /* ------------------------------------------------------------------
+     About: the journey line draws with the scroll and lights each year
+     as it reaches it; the skill chips land one after another.
+  ------------------------------------------------------------------ */
+  (() => {
+    const journey = $('[data-journey]'), panels = $('[data-panels]');
+    if (!journey) return;
+    const fill = $('.journey__fill', journey), track = $('.journey__track', journey);
+    const years = $$('.year', journey);
+    const lit = (on) => years.forEach((y, i) => y.classList.toggle('is-on', on(i, y)));
+    if (RM || !window.gsap || !window.ScrollTrigger) { lit(() => true); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    journey.classList.add('is-live');
+    panels.classList.add('is-pending');
+    onView(panels, () => panels.classList.remove('is-pending'), { threshold: 0.25 });
+
+    const mm = gsap.matchMedia();
+    // side by side: one line across all three years, scrubbed by the scroll
+    mm.add('(min-width: 861px)', () => {
+      const at = () => years.map((y) => (y.offsetLeft - years[0].offsetLeft) / track.offsetWidth);
+      let marks = at();
+      const st = ScrollTrigger.create({
+        trigger: journey, start: 'top 72%', end: 'bottom 62%', scrub: 0.6,
+        onRefresh: () => { marks = at(); },
+        onUpdate: (self) => {
+          const p = self.progress;
+          fill.style.setProperty('--p', p.toFixed(4));
+          lit((i) => p >= marks[i] * 0.92);
+        },
+      });
+      fill.style.setProperty('--p', '0');
+      return () => { st.kill(); fill.style.removeProperty('--p'); lit(() => false); };
+    });
+    // stacked: each year lights as it scrolls into the reading zone
+    mm.add('(max-width: 860px)', () => {
+      const sts = years.map((y) => ScrollTrigger.create({ trigger: y, start: 'top 78%', onEnter: () => y.classList.add('is-on') }));
+      return () => sts.forEach((t) => t.kill());
+    });
+  })();
+
+  /* ------------------------------------------------------------------
      Hero photo: a 3x3 Sobel kernel convolves across it and reveals it
   ------------------------------------------------------------------ */
   (() => {
